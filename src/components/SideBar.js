@@ -19,7 +19,7 @@ const SideBar = () => {
       <Menu
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={["1"]}
+        defaultSelectedKeys={["2"]}
         style={{ height: "100%", borderRight: 0 }}
       >
         <Menu.Item key="1" icon={<HomeOutlined />}>

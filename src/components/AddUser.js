@@ -3,32 +3,24 @@ import { UserAddOutlined, SaveOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import AppForm from "./Form";
 import { inject, observer } from "mobx-react";
+import axios from "axios";
 
 const AddUser = ({ store }) => {
   const [form] = Form.useForm();
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [addLoading, setAddLoading] = useState(false);
-  const { users, setUsers } = store;
+  const { getUsers } = store;
   const { setTableLoading } = store.bool;
-  const { name, username, email, phone, company, website } = store.user;
+  const { name, username, email } = store.user;
 
   const handleAddUser = () => {
     if (name === "" || username === "" || email === "") {
       alert("Please enter the required information!");
     } else {
       setAddLoading(true);
-      let newUser = {
-        key: `${users.length + 1}`,
-        id: `${users.length + 1}`,
-        name: name,
-        username: username,
-        email: email,
-        phone: phone,
-        company: company,
-        website: website,
-      };
-      setTimeout(() => {
-        setUsers([...users, newUser]);
+      setTimeout(async () => {
+        await axios.post(`${store.url}/users/new`, store.user);
+        getUsers();
         setIsAddModalVisible(false);
         setAddLoading(false);
         setTableLoading(true);

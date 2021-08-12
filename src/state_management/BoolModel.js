@@ -1,4 +1,4 @@
-import { types, flow } from "mobx-state-tree";
+import { types } from "mobx-state-tree";
 
 const BoolModel = types
   .model("BoolModel", {
@@ -7,12 +7,12 @@ const BoolModel = types
   })
   .views((self) => ({}))
   .actions((self) => ({
-    setViewModalVisible: flow(function* () {
+    setViewModalVisible() {
       self.isViewModalVisible = !self.isViewModalVisible;
-    }),
-    setTableLoading: flow(function* () {
+    },
+    setTableLoading() {
       self.isTableLoading = !self.isTableLoading;
-    }),
+    },
   }));
 
 export default BoolModel;

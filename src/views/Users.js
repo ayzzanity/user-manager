@@ -16,7 +16,7 @@ const Users = () => {
           minHeight: 550,
         }}
       >
-        <Title type={3}>User Management</Title>
+        <Title level={1}>User Management</Title>
         <AddUser />
         <TableView />
         <UserInfo />

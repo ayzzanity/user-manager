@@ -1,7 +1,7 @@
 import { Typography, Layout } from "antd";
 const Home = () => {
   const { Content } = Layout;
-  const { Title, Text } = Typography;
+  const { Title } = Typography;
   return (
     <Layout style={{ padding: "0 24px 24px" }}>
       <Content
@@ -14,7 +14,13 @@ const Home = () => {
       >
         <Title level={1}>Home Page</Title>
         <Title level={3}>User Management App</Title>
-        <Text>Developed with Ant Design and MobX State Tree | ReactJS</Text>
+        <Title level={5}>
+          Developed with Ant Design and MobX State Tree | ReactJS |
+        </Title>
+        <Title level={5}>
+          Developed with NodeJS, ExpressJS, Sequelize ORM, and MySQL Database |
+          Webserver |
+        </Title>
       </Content>
     </Layout>
   );
