@@ -10,7 +10,6 @@ const TableView = ({ store }) => {
   const { users, getUsers } = store;
   useEffect(() => {
     getUsers();
-    console.log("useEffect");
   }, [store.users]);
   const columns = [
     {
