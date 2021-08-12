@@ -22,7 +22,7 @@ const UserInfo = ({ store }) => {
     } else {
       setIsSaveLoading(true);
       setTimeout(async () => {
-        await axios.put(`${store.url}/users/edit/${id}`, store.user);
+        await axios.put(`${store.url}/edit/${id}`, store.user);
         getUsers();
         setIsEditing(false);
         setIsSaveLoading(false);

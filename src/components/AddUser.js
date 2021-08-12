@@ -19,7 +19,7 @@ const AddUser = ({ store }) => {
     } else {
       setAddLoading(true);
       setTimeout(async () => {
-        await axios.post(`${store.url}/users/new`, store.user);
+        await axios.post(`${store.url}/new`, store.user);
         getUsers();
         setIsAddModalVisible(false);
         setAddLoading(false);

@@ -60,7 +60,7 @@ const TableView = ({ store }) => {
   const handleDelete = (key) => {
     setTableLoading();
     setTimeout(async () => {
-      await axios.delete(`${store.url}/users/delete/${key}`);
+      await axios.delete(`${store.url}/delete/${key}`);
       store.getUsers();
       setTableLoading();
     }, 1000);

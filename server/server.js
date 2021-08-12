@@ -8,7 +8,6 @@ app.use(cors({ origin: "*" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/api", require("./routes/apiRoutes"));
-
 const init = async () => {
   await db.sequelize.sync();
   app.listen(PORT, () => {

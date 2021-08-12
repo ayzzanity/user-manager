@@ -8,7 +8,7 @@ const RootStore = types
     users: types.optional(types.array(UserModel), []),
     user: types.optional(UserModel, {}),
     bool: types.optional(BoolModel, {}),
-    url: types.optional(types.string, "http://localhost:3000/api"),
+    url: types.optional(types.string, "/api/users"),
   })
   .views((self) => ({}))
   .actions((self) => ({
@@ -34,7 +34,7 @@ const RootStore = types
   }));
 
 const fetchUsers = async (url) => {
-  const res = await axios.get(`${url}/users`);
+  const res = await axios.get(`${url}`);
   return res.data;
 };
 
