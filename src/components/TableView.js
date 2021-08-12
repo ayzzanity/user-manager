@@ -2,13 +2,16 @@ import { useEffect } from "react";
 import { Table, Popconfirm, Button } from "antd";
 import { EyeOutlined, DeleteOutlined } from "@ant-design/icons";
 import { inject, observer } from "mobx-react";
+import axios from "axios";
 
 const TableView = ({ store }) => {
-  const { isTableLoading, setTableLoading } = store.bool;
-  const { users, setUsers } = store;
+  const { isTableLoading, setTableLoading, setViewModalVisible } = store.bool;
+  const { setUser } = store.user;
+  const { users, getUsers } = store;
   useEffect(() => {
-    store.getUsers();
-  }, [store]);
+    getUsers();
+    console.log("useEffect");
+  }, [store.users]);
   const columns = [
     {
       title: "Name",
@@ -52,14 +55,15 @@ const TableView = ({ store }) => {
     },
   ];
   const showUserModal = (user) => {
-    store.bool.setViewModalVisible();
-    store.user.setUser(user);
+    setViewModalVisible();
+    setUser(user);
   };
   const handleDelete = (key) => {
-    setTableLoading(true);
-    setTimeout(() => {
-      setUsers(users.filter((user) => user.id !== key));
-      setTableLoading(false);
+    setTableLoading();
+    setTimeout(async () => {
+      await axios.delete(`${store.url}/users/delete/${key}`);
+      store.getUsers();
+      setTableLoading();
     }, 1000);
   };
   return (

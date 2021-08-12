@@ -1,20 +1,23 @@
 import { flow, types } from "mobx-state-tree";
 import UserModel from "./UserModel";
 import BoolModel from "./BoolModel";
+import axios from "axios";
 
 const RootStore = types
   .model("RootStore", {
     users: types.optional(types.array(UserModel), []),
     user: types.optional(UserModel, {}),
     bool: types.optional(BoolModel, {}),
+    url: types.optional(types.string, "http://localhost:3000/api"),
   })
   .views((self) => ({}))
   .actions((self) => ({
-    setUsers: flow(function* (newUsers) {
+    setUsers(newUsers) {
       self.users = newUsers;
-    }),
-    async getUsers() {
-      const data = await fetchUsers();
+    },
+    getUsers: flow(function* () {
+      self.bool.setTableLoading();
+      const data = yield fetchUsers(self.url);
       const newUsers = data.map((user) => ({
         id: `${user.id}`,
         key: `${user.id}`,
@@ -22,18 +25,17 @@ const RootStore = types
         username: user.username,
         email: user.email,
         phone: user.phone,
-        company: user.company.name,
+        company: user.company,
         website: user.website,
       }));
       self.setUsers(newUsers);
-    },
+      self.bool.setTableLoading();
+    }),
   }));
 
-const USERS_URL = "https://jsonplaceholder.typicode.com/users";
-const fetchUsers = async () => {
-  const res = await fetch(USERS_URL);
-  const data = await res.json();
-  return data;
+const fetchUsers = async (url) => {
+  const res = await axios.get(`${url}/users`);
+  return res.data;
 };
 
 export default RootStore;

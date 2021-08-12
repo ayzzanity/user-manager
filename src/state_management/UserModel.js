@@ -1,4 +1,4 @@
-import { types, flow } from "mobx-state-tree";
+import { types } from "mobx-state-tree";
 
 const UserModel = types
   .model("UserModel", {
@@ -13,7 +13,7 @@ const UserModel = types
   })
   .views((self) => ({}))
   .actions((self) => ({
-    setUser: flow(function* (record) {
+    setUser(record) {
       self.key = record.key;
       self.id = record.id;
       self.name = record.name;
@@ -22,7 +22,7 @@ const UserModel = types
       self.phone = record.phone;
       self.company = record.company;
       self.website = record.website;
-    }),
+    },
   }));
 
 export default UserModel;

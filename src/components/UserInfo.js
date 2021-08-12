@@ -3,9 +3,11 @@ import { Button, Modal, Form, Popconfirm } from "antd";
 import { EditOutlined, SaveOutlined } from "@ant-design/icons";
 import AppForm from "./Form";
 import { inject, observer } from "mobx-react";
+import axios from "axios";
 
 const UserInfo = ({ store }) => {
   const [form] = Form.useForm();
+  const { getUsers } = store;
   const { isViewModalVisible, setViewModalVisible, setTableLoading } =
     store.bool;
   const { id, name, username, email, phone, company, website, setUser } =
@@ -19,23 +21,9 @@ const UserInfo = ({ store }) => {
       alert("Please enter the required information!");
     } else {
       setIsSaveLoading(true);
-      setTimeout(() => {
-        const updatedUsers = store.users.map((user) =>
-          user.id == id
-            ? {
-                ...user,
-                id: id,
-                key: id,
-                name: name,
-                username: username,
-                email: email,
-                phone: phone,
-                company: company,
-                website: website,
-              }
-            : user
-        );
-        store.setUsers(updatedUsers);
+      setTimeout(async () => {
+        await axios.put(`${store.url}/users/edit/${id}`, store.user);
+        getUsers();
         setIsEditing(false);
         setIsSaveLoading(false);
         setViewModalVisible(false);
